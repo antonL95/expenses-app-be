@@ -96,13 +96,13 @@ class DownloadFioBankTransactionsCommand extends Command
     private function sanitizeJsonFromApi(array $json): array
     {
         $returnArray = [
-            'fioId' => '',
-            'transactionTimestamp' => '',
+            'fio_id' => '',
+            'transaction_timestamp' => '',
             'amount' => 0.0,
             'note' => $json['column7']['value'] ?? null,
             'reference' => $json['column27']['value'] ?? null,
             'comment' => $json['column25']['value'] ?? null,
-            'noteForRecipient' => $json['column16']['value'] ?? null,
+            'note_for_recipient' => $json['column16']['value'] ?? null,
         ];
 
         if (!isset($json['column22']['value'], $json['column0']['value'], $json['column1']['value'])) {
@@ -125,8 +125,8 @@ class DownloadFioBankTransactionsCommand extends Command
             throw new InvalidArgumentException('Invalid transactionTimestamp from API');
         }
 
-        $returnArray['fioId'] = (string) $fioId;
-        $returnArray['transactionTimestamp'] = new DateTimeImmutable($transactionTimestamp);
+        $returnArray['fio_id'] = (string) $fioId;
+        $returnArray['transaction_timestamp'] = new DateTimeImmutable($transactionTimestamp);
         $returnArray['amount'] = round($amount, 2);
 
         return $returnArray;

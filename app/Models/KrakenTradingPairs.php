@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class KrakenTradingPairs extends Model
 {
@@ -14,4 +15,10 @@ class KrakenTradingPairs extends Model
         'crypto',
         'fiat',
     ];
+
+
+    public function currentPrice(): HasMany
+    {
+        return $this->hasMany(KrakenKeyPairCurrentPrice::class, 'key_pair_id');
+    }
 }

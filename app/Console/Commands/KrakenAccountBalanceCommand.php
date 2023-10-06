@@ -82,23 +82,30 @@ class KrakenAccountBalanceCommand extends Command
                     'key_pair',
                     'LIKE',
                     \sprintf('%%%s%%', $asset),
-                )->where('fiat', 'usd')->first();
+                )->where(
+                    'fiat',
+                    '=',
+                    'usd',
+                )->first();
             }
 
             if ($krakenTradingPairs === null) {
-                $this->info(sprintf('Asset [%s] doest not exist in database', $asset));
+                $this->info(
+                    \sprintf('Asset [%s] doest not exist in database', $asset),
+                );
             } else {
-                $krakenCurrentPrice = KrakenKeyPairCurrentPrice::where(
-                    'keyPairId',
-                    '=',
-                    $krakenTradingPairs->id,
-                )->first();
+                $krakenCurrentPrice = $krakenTradingPairs->currentPrice()->latest()->first();
 
-                $priceInUsd = $krakenCurrentPrice->lastTradeClosed * $balance;
+                if (!$krakenCurrentPrice instanceof KrakenKeyPairCurrentPrice) {
+                    continue;
+                }
+
+                $priceInUsd = $krakenCurrentPrice->last_trade_closed * $balance;
 
                 if ($priceInUsd < 1) {
                     continue;
                 }
+
                 $totalInUsd += $priceInUsd;
 
                 $this->info(
@@ -106,13 +113,14 @@ class KrakenAccountBalanceCommand extends Command
                         'Asset [%s] balance: %s and in usd: %s',
                         $asset,
                         $balance,
-                        $krakenCurrentPrice->lastTradeClosed * $balance,
+                        $krakenCurrentPrice->last_trade_closed * $balance,
                     ),
                 );
             }
         }
 
         $this->newLine();
+
         $this->info(\sprintf('Total in usd: %s', number_format($totalInUsd, 2, '.', '')));
 
         return 0;

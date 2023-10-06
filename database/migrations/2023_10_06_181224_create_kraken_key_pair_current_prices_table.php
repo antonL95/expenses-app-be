@@ -9,14 +9,14 @@ return new class extends Migration {
     {
         Schema::create('kraken_key_pair_current_prices', static function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('keyPairId');
-            $table->decimal('lastTradeClosed');
-            $table->decimal('ask');
-            $table->decimal('bid');
-            $table->decimal('low');
-            $table->decimal('high');
+            $table->unsignedBigInteger('key_pair_id');
+            $table->decimal('last_trade_closed', 20, 6);
+            $table->decimal('ask', 20, 6);
+            $table->decimal('bid', 20, 6);
+            $table->decimal('low', 20, 6);
+            $table->decimal('high', 20, 6);
             $table->timestamps();
-            $table->foreign('keyPairId')->references('id')->on('kraken_trading_pairs');
+            $table->foreign('key_pair_id')->references('id')->on('kraken_trading_pairs');
         });
     }
 

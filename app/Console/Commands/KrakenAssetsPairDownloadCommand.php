@@ -61,10 +61,10 @@ class KrakenAssetsPairDownloadCommand extends Command
             }
 
             KrakenKeyPairCurrentPrice::create([
-                'keyPairId' => $keyPair->id,
+                'key_pair_id' => $keyPair->id,
                 'ask' => $tradeValues['a'][0],
                 'bid' => $tradeValues['b'][0],
-                'lastTradeClosed' => $tradeValues['c'][0],
+                'last_trade_closed' => $tradeValues['c'][0],
                 'low' => $tradeValues['l'][0],
                 'high' => $tradeValues['h'][0],
             ]);

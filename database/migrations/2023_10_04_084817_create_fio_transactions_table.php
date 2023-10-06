@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('fio_transactions', static function (Blueprint $table) {
             $table->id();
-            $table->string('fioId')->unique();
-            $table->date('transactionTimestamp');
+            $table->string('fio_id')->unique();
+            $table->date('transaction_timestamp');
             $table->decimal('amount', 10);
             $table->string('note')->nullable();
             $table->string('reference')->nullable();
             $table->string('comment')->nullable();
-            $table->string('noteForRecipient')->nullable();
+            $table->string('note_for_recipient')->nullable();
             $table->timestamps();
         });
     }

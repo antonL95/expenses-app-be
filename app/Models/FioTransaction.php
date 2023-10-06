@@ -12,18 +12,18 @@ class FioTransaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fioId',
-        'transactionTimestamp',
+        'fio_id',
+        'transaction_timestamp',
         'amount',
         'note',
         'reference',
         'comment',
-        'noteForRecipient',
+        'note_for_recipient',
     ];
 
     protected $casts = [
-        'transactionTimestamp' => 'date',
-        'amount' => 'decimal:2',
+        'transaction_timestamp' => 'date',
+        'amount' => 'decimal:6',
     ];
 
     protected $table = 'fio_transactions';
