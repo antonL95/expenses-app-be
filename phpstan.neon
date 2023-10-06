@@ -1,0 +1,20 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    memoryLimit: 2048M
+    paths:
+        - app/
+        - tests/
+
+    # Level 9 is the highest level
+    level: 9
+
+    ignoreErrors:
+        - '#Undefined variable: \$this#'
+#
+#    excludePaths:
+#        - ./*/*/FileToBeExcluded.php
+#
+#    checkMissingIterableValueType: false

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -168,6 +170,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -185,4 +189,15 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'fio' => [
+        'transactionsUrl' => env('FIO_BANK_API_URL'),
+        'token' => env('FIO_BANK_API_TOKEN'),
+    ],
+
+    'kraken' => [
+        'apiUrl' => env('KRAKEN_API_URL'),
+        'publicEndpoint' => env('KRAKEN_PUBLIC_API_URL'),
+        'apiSecret' => env('KRAKEN_PRIVATE_KEY'),
+        'apiKey' => env('KRAKEN_API_KEY'),
+    ],
 ];
