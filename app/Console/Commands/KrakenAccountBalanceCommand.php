@@ -18,16 +18,18 @@ class KrakenAccountBalanceCommand extends Command
 
     protected $description = 'Get account balance from Kraken';
 
-
     public function handle(): int
     {
         $this->newLine();
         $this->info('Getting account balance from Kraken');
         $this->newLine();
 
-        $krakenApiUrl = (string) config('app.kraken.apiUrl');
+        $krakenApiUrl = config('app.kraken.apiUrl');
+        if (!\is_string($krakenApiUrl)) {
+            throw new \DomainException('Kraken API URL is not set');
+        }
 
-        $nonce = Carbon::now()->timestamp;
+        $nonce = (int) Carbon::now()->timestamp;
         $path = '/0/private/Balance';
         $request = [
             'nonce' => $nonce,
@@ -37,7 +39,7 @@ class KrakenAccountBalanceCommand extends Command
 
         $json = Http::send(
             'POST',
-            $krakenApiUrl . $path,
+            $krakenApiUrl.$path,
             [
                 'headers' => [
                     'API-Key' => config('app.kraken.apiKey'),
@@ -57,7 +59,7 @@ class KrakenAccountBalanceCommand extends Command
         $totalInUsd = 0;
 
         foreach ($result as $asset => $balance) {
-            $balance = (double) $balance;
+            $balance = (float) $balance;
 
             if ($balance <= 0) {
                 continue;
@@ -81,7 +83,7 @@ class KrakenAccountBalanceCommand extends Command
                 $krakenTradingPairs = KrakenTradingPairs::where(
                     'key_pair',
                     'LIKE',
-                    \sprintf('%%%s%%', $asset),
+                    sprintf('%%%s%%', $asset),
                 )->where(
                     'fiat',
                     '=',
@@ -91,7 +93,7 @@ class KrakenAccountBalanceCommand extends Command
 
             if ($krakenTradingPairs === null) {
                 $this->info(
-                    \sprintf('Asset [%s] doest not exist in database', $asset),
+                    sprintf('Asset [%s] doest not exist in database', $asset),
                 );
             } else {
                 $krakenCurrentPrice = $krakenTradingPairs->currentPrice()->latest()->first();
@@ -109,7 +111,7 @@ class KrakenAccountBalanceCommand extends Command
                 $totalInUsd += $priceInUsd;
 
                 $this->info(
-                    \sprintf(
+                    sprintf(
                         'Asset [%s] balance: %s and in usd: %s',
                         $asset,
                         $balance,
@@ -121,7 +123,7 @@ class KrakenAccountBalanceCommand extends Command
 
         $this->newLine();
 
-        $this->info(\sprintf('Total in usd: %s', number_format($totalInUsd, 2, '.', '')));
+        $this->info(sprintf('Total in usd: %s', number_format($totalInUsd, 2, '.', '')));
 
         return 0;
     }

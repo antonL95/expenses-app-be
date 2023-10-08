@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('kraken_key_pair_current_prices', static function (Blueprint $table) {
@@ -19,7 +22,6 @@ return new class extends Migration {
             $table->foreign('key_pair_id')->references('id')->on('kraken_trading_pairs');
         });
     }
-
 
     public function down(): void
     {

@@ -19,17 +19,16 @@ class DownloadFioBankTransactionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'app:download-fio-bank-transactions {from?} {to?}';
 
     /**
      * The console command description.
-     *
      * @var string
      */
     protected $description = 'Download transactions from Fio bank';
+
 
     public function handle(): int
     {
@@ -46,6 +45,10 @@ class DownloadFioBankTransactionsCommand extends Command
         } else {
             $to = Carbon::now()
                 ->setTime(0, 0);
+        }
+
+        if (!$from || !$to) {
+            throw new InvalidArgumentException('Invalid date');
         }
 
         $url = Config::get('app.fio.transactionsUrl');
@@ -87,10 +90,11 @@ class DownloadFioBankTransactionsCommand extends Command
         return 0;
     }
 
+
     /**
-     * @param  array<string,array<string,string|int|float|null>>  $json
-     * @return array<string,string|int|float|null|DateTimeImmutable>
+     * @param array<string,array<string,string|int|float|null>> $json
      *
+     * @return array<string,string|int|float|null|DateTimeImmutable>
      * @throws DomainException|InvalidArgumentException|Exception
      */
     private function sanitizeJsonFromApi(array $json): array
@@ -113,16 +117,12 @@ class DownloadFioBankTransactionsCommand extends Command
         $transactionTimestamp = $json['column0']['value'];
         $amount = $json['column1']['value'];
 
-        if (!\is_string($fioId) && !is_numeric($fioId)) {
-            throw new InvalidArgumentException('Invalid transactionTimestamp from API');
-        }
-
         if (!\is_string($transactionTimestamp)) {
             throw new InvalidArgumentException('Invalid transactionTimestamp from API');
         }
 
         if (!\is_int($amount) && !\is_float($amount)) {
-            throw new InvalidArgumentException('Invalid transactionTimestamp from API');
+            throw new InvalidArgumentException('Invalid amount from API');
         }
 
         $returnArray['fio_id'] = (string) $fioId;

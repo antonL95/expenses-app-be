@@ -2,8 +2,6 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
-
-    memoryLimit: 2048M
     paths:
         - app/
         - tests/

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +17,6 @@ class KrakenTradingPairs extends Model
         'crypto',
         'fiat',
     ];
-
 
     public function currentPrice(): HasMany
     {

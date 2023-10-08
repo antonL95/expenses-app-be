@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +29,9 @@ class KrakenKeyPairCurrentPrice extends Model
         'high' => 'decimal:6',
     ];
 
-
+    /**
+     * @return BelongsTo<KrakenTradingPairs, KrakenKeyPairCurrentPrice>
+     */
     public function keyPair(): BelongsTo
     {
         return $this->belongsTo(KrakenTradingPairs::class, 'key_pair_id');

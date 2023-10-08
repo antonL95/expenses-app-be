@@ -17,7 +17,6 @@ class KrakenAssetsPairDownloadCommand extends Command
 
     protected $description = 'Download tradable ticker pairs';
 
-
     public function handle(): void
     {
         $url = Config::get('app.kraken.publicEndpoint');
@@ -27,7 +26,7 @@ class KrakenAssetsPairDownloadCommand extends Command
         }
 
         if ($this->argument('tickerPair') !== null) {
-            $url .= '?pair=' . $this->argument('tickerPair');
+            $url .= '?pair='.$this->argument('tickerPair');
         }
 
         $json = Http::get($url)->json();
@@ -57,7 +56,7 @@ class KrakenAssetsPairDownloadCommand extends Command
                     'fiat' => Str::upper($fiatTicker),
                 ]);
 
-                $this->info('Pair ' . $pair . ' added');
+                $this->info('Pair '.$pair.' added');
             }
 
             KrakenKeyPairCurrentPrice::create([
@@ -70,6 +69,6 @@ class KrakenAssetsPairDownloadCommand extends Command
             ]);
         }
 
-        $this->info('Downloaded ' . \count($results) . ' pairs');
+        $this->info('Downloaded '.\count($results).' pairs');
     }
 }

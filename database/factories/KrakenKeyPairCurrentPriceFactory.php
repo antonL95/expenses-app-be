@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\KrakenKeyPairCurrentPrice;
@@ -9,7 +11,6 @@ use Illuminate\Support\Carbon;
 class KrakenKeyPairCurrentPriceFactory extends Factory
 {
     protected $model = KrakenKeyPairCurrentPrice::class;
-
 
     public function definition(): array
     {
