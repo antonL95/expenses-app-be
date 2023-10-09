@@ -200,4 +200,9 @@ return [
         'apiSecret' => env('KRAKEN_PRIVATE_KEY'),
         'apiKey' => env('KRAKEN_API_KEY'),
     ],
+
+    'ethScan' => [
+        'apiUrl' => env('ETH_SCAN_API_URL'),
+        'apiKey' => env('ETH_SCAN_API_TOKEN'),
+    ]
 ];

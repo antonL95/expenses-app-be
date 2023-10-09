@@ -19,16 +19,17 @@ class DownloadFioBankTransactionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'app:download-fio-bank-transactions {from?} {to?}';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Download transactions from Fio bank';
-
 
     public function handle(): int
     {
@@ -90,11 +91,10 @@ class DownloadFioBankTransactionsCommand extends Command
         return 0;
     }
 
-
     /**
-     * @param array<string,array<string,string|int|float|null>> $json
-     *
+     * @param  array<string,array<string,string|int|float|null>>  $json
      * @return array<string,string|int|float|null|DateTimeImmutable>
+     *
      * @throws DomainException|InvalidArgumentException|Exception
      */
     private function sanitizeJsonFromApi(array $json): array

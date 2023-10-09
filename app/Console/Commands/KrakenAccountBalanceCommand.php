@@ -6,7 +6,7 @@ namespace App\Console\Commands;
 
 use App\Models\KrakenKeyPairCurrentPrice;
 use App\Models\KrakenTradingPairs;
-use App\Services\KrakenMessageSigner;
+use App\Utils\KrakenMessageSigner;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
