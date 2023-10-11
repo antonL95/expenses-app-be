@@ -15,7 +15,7 @@ class KrakenAssetsPairDownloadCommand extends Command
 {
     protected $signature = 'kraken:assets-pair-download {tickerPair?}';
 
-    protected $description = 'Download tradable ticker pairs';
+    protected $description = 'Download trade-able ticker pairs';
 
     public function handle(): void
     {
