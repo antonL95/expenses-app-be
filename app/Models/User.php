@@ -6,6 +6,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -60,4 +61,28 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * @return HasMany<UserBankAccounts>
+     */
+    public function bankAccounts(): HasMany
+    {
+        return $this->hasMany(UserBankAccounts::class, 'userId', 'id');
+    }
+
+    /**
+     * @return HasMany<UserCryptoWallets>
+     */
+    public function cryptoWallets(): HasMany
+    {
+        return $this->hasMany(UserCryptoWallets::class, 'userId', 'id');
+    }
+
+    /**
+     * @return HasMany<UserKrakenAccount>
+     */
+    public function krakenAccounts(): HasMany
+    {
+        return $this->hasMany(UserKrakenAccount::class, 'userId', 'id');
+    }
 }

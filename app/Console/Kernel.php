@@ -15,8 +15,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('kraken:assets-pair-download')->everyMinute();
-        $schedule->command('kraken:account-balance')->twiceDaily();
+        //$schedule->command('kraken:assets-pair-download')->everyMinute();
+        $schedule->command('app:save-crypto-prices')->everyTwoMinutes();
+        //$schedule->command('kraken:account-balance')->twiceDaily();
     }
 
     /**

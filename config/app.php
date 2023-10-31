@@ -201,8 +201,15 @@ return [
         'apiKey' => env('KRAKEN_API_KEY'),
     ],
 
-    'ethScan' => [
-        'apiUrl' => env('ETH_SCAN_API_URL'),
-        'apiKey' => env('ETH_SCAN_API_TOKEN'),
-    ]
+    'etherscan' => [
+        'api_key' => env('ETH_SCAN_API_TOKEN'),
+    ],
+
+    'polygonscan' => [
+        'api_key' => env('POLYGON_SCAN_API_TOKEN'),
+    ],
+
+    'bitcoin' => [
+        'api_url' => env('BITCOIN_API_URL'),
+    ],
 ];
