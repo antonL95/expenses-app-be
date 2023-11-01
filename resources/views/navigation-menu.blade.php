@@ -108,6 +108,10 @@
                                 </x-dropdown-link>
                             @endif
 
+                            <x-dropdown-link href="{{ route('bank-accounts') }}">
+                                {{ __('Bank Accounts') }}
+                            </x-dropdown-link>
+
                             <div class="border-t border-gray-200"></div>
 
                             <!-- Authentication -->

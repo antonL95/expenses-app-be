@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Livewire\ShowBankAccounts;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', fn () => view('welcome'));
+Route::get('/', static fn () => view('welcome'));
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', static fn () => view('dashboard'))->name('dashboard');
+    Route::get('/bank-accounts', ShowBankAccounts::class)->name('bank-accounts');
 });

@@ -1,6 +1,7 @@
 @props(['disabled' => false])
 
 <select {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm']) !!}>
+    <option value="" label=""></option>
     <option value="AFN" label="Afghan afghani">AFN</option>
     <option value="ALL" label="Albanian lek">ALL</option>
     <option value="DZD" label="Algerian dinar">DZD</option>

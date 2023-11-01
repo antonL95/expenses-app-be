@@ -5,17 +5,13 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\UserBankAccounts;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class UpdateProfileBankAccount extends Component
 {
-    /**
-     * @var null|UserBankAccounts[]
-     */
-    public ?array $accounts = [];
-
     public ?string $accountName;
 
     #[Rule(['required'])]
@@ -24,10 +20,6 @@ class UpdateProfileBankAccount extends Component
     #[Rule(['required'])]
     public string $accountCurrency = '';
 
-    public function mount(): void
-    {
-        $this->accounts = Auth::user()?->with('bankAccounts');
-    }
 
     public function addBankAccount(): void
     {
@@ -37,24 +29,25 @@ class UpdateProfileBankAccount extends Component
             return;
         }
 
-        $this->accounts[] = UserBankAccounts::create(
+        UserBankAccounts::create(
             [
                 'userId' => $user->id,
                 'accountName' => $this->accountName,
                 'accountApiToken' => $this->accountApiToken,
                 'accountCurrency' => $this->accountCurrency,
-                'createdAt' => now(),
             ],
         );
+
+        $this->dispatch('userBankAccountAdded');
+
+        $this->reset();
     }
 
-    public function render()
+
+    public function render(): View
     {
         return view(
-            'livewire.update-profile-bank-account',
-            [
-                'bankAccounts' => $this->accounts,
-            ],
+            'livewire.bank_accounts.update-profile-bank-account',
         );
     }
 }
