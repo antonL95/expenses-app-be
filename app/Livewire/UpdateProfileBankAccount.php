@@ -20,7 +20,6 @@ class UpdateProfileBankAccount extends Component
     #[Rule(['required'])]
     public string $accountCurrency = '';
 
-
     public function addBankAccount(): void
     {
         $user = Auth::user();
@@ -43,6 +42,16 @@ class UpdateProfileBankAccount extends Component
         $this->reset();
     }
 
+    public function update(UserBankAccounts $accounts): void
+    {
+        $accounts->update([
+            'accountApiToken' => $this->accountApiToken,
+            'accountCurrency' => $this->accountCurrency,
+            'accountName' => $this->accountName,
+        ]);
+
+        $this->dispatch('userBankAccountAdded');
+    }
 
     public function render(): View
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Models\UserBankAccounts;
@@ -14,12 +16,10 @@ class ShowBankAccounts extends Component
     /** @var Collection<int, UserBankAccounts>|null */
     public ?Collection $accounts;
 
-
     public function mount(): void
     {
         $this->accounts = Auth::user()?->bankAccounts;
     }
-
 
     public function deleteBankAccount(int $bankAccountId): void
     {
@@ -34,14 +34,12 @@ class ShowBankAccounts extends Component
         $this->dispatch('userBankAccountDeleted');
     }
 
-
     #[On('userBankAccountDeleted')]
     #[On('userBankAccountAdded')]
     public function updateBankAccounts(): void
     {
         $this->accounts = Auth::user()?->bankAccounts;
     }
-
 
     public function render(): View
     {
