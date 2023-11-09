@@ -12,6 +12,11 @@ export default defineConfig({
                 ...refreshPaths,
                 'app/Livewire/**',
             ],
+            server: {
+                hmr: {
+                    host: 'personal-budget-be.test',
+                }
+            },
         }),
     ],
 });
