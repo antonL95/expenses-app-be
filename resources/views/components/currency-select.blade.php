@@ -1,6 +1,8 @@
 @props(['disabled' => false])
-
-<select {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm']) !!}>
+<label for="currencies" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select your
+    currency</label>
+<select id="currencies"
+    {!! $attributes->merge(['class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'])  !!}>
     <option value="" label=""></option>
     <option value="AFN" label="Afghan afghani">AFN</option>
     <option value="ALL" label="Albanian lek">ALL</option>
@@ -42,7 +44,7 @@
     <option value="HRK" label="Croatian kuna">HRK</option>
     <option value="CUC" label="Cuban convertible peso">CUC</option>
     <option value="CUP" label="Cuban peso">CUP</option>
-    <option value="CZK" selected="selected" label="Czech koruna">CZK</option>
+    <option value="CZK" selected label="Czech koruna">CZK</option>
     <option value="DKK" label="Danish krone">DKK</option>
     <option value="DOP" label="Dominican peso">DOP</option>
     <option value="DJF" label="Djiboutian franc">DJF</option>

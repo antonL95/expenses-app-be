@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
-class UpdateProfileBankAccount extends Component
+class AddBankAccount extends Component
 {
     public ?string $accountName;
 
@@ -18,7 +18,8 @@ class UpdateProfileBankAccount extends Component
     public string $accountApiToken;
 
     #[Rule(['required'])]
-    public string $accountCurrency = '';
+    public ?string $accountCurrency = null;
+
 
     public function addBankAccount(): void
     {
@@ -37,26 +38,14 @@ class UpdateProfileBankAccount extends Component
             ],
         );
 
-        $this->dispatch('userBankAccountAdded');
-
-        $this->reset();
+        $this->redirect(ShowBankAccounts::class, true);
     }
 
-    public function update(UserBankAccounts $accounts): void
-    {
-        $accounts->update([
-            'accountApiToken' => $this->accountApiToken,
-            'accountCurrency' => $this->accountCurrency,
-            'accountName' => $this->accountName,
-        ]);
-
-        $this->dispatch('userBankAccountAdded');
-    }
 
     public function render(): View
     {
         return view(
-            'livewire.bank_accounts.update-profile-bank-account',
+            'livewire.bank_accounts.add-bank-account',
         );
     }
 }

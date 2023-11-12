@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Livewire\AddBankAccount;
 use App\Livewire\ShowBankAccounts;
+use App\Livewire\UpdateBankAccount;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +27,6 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', static fn () => view('dashboard'))->name('dashboard');
     Route::get('/bank-accounts', ShowBankAccounts::class)->name('bank-accounts');
+    Route::get('/add-bank-account', AddBankAccount::class)->name('add-bank-account');
+    Route::get('/update-bank-account/{id}', UpdateBankAccount::class)->name('update-bank-account');
 });
