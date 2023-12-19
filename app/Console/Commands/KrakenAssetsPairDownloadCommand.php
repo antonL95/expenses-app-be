@@ -17,7 +17,7 @@ class KrakenAssetsPairDownloadCommand extends Command
 
     protected $description = 'Download trade-able ticker pairs';
 
-    public function handle(): void
+    public function handle(): int
     {
         $url = Config::get('app.kraken.publicEndpoint');
 
@@ -70,5 +70,7 @@ class KrakenAssetsPairDownloadCommand extends Command
         }
 
         $this->info('Downloaded '.\count($results).' pairs');
+
+        return 0;
     }
 }

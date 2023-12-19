@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Livewire;
 
 use App\Livewire\UpdateBankAccount;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 

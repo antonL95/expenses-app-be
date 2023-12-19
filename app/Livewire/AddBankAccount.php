@@ -20,7 +20,6 @@ class AddBankAccount extends Component
     #[Rule(['required'])]
     public ?string $accountCurrency = null;
 
-
     public function addBankAccount(): void
     {
         $user = Auth::user();
@@ -40,7 +39,6 @@ class AddBankAccount extends Component
 
         $this->redirect(ShowBankAccounts::class, true);
     }
-
 
     public function render(): View
     {

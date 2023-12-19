@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\FioTransaction;
+use App\Models\UserBankAccounts;
 use Carbon\Carbon;
 use DomainException;
 use Exception;
@@ -15,21 +16,21 @@ use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
 use Safe\DateTimeImmutable;
 
-class DownloadFioBankTransactionsCommand extends Command
+class GetBankTransactionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:download-fio-bank-transactions {from?} {to?}';
+    protected $signature = 'app:get-bank-transactions {from?} {to?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Download transactions from Fio bank';
+    protected $description = 'Download transactions from bank';
 
     public function handle(): int
     {
@@ -52,39 +53,53 @@ class DownloadFioBankTransactionsCommand extends Command
             throw new InvalidArgumentException('Invalid date');
         }
 
+        $bankAccounts = UserBankAccounts::all();
+
         $url = Config::get('app.fio.transactionsUrl');
-        \assert(\is_string($url));
-
-        $url = sprintf(
-            $url,
-            $from->format('Y-m-d'),
-            $to->format('Y-m-d'),
-        );
-
-        $json = Http::get($url)->json();
-
-        if (!\is_array($json)) {
-            return 255;
+        if (!\is_string($url)) {
+            throw new InvalidArgumentException('Invalid URL');
         }
 
-        if (isset($json['accountStatement']['transactionList']['transaction'])) {
-            $transactionList = (array) $json['accountStatement']['transactionList']['transaction'];
-        } else {
-            return 255;
-        }
+        foreach ($bankAccounts as $bankAccount) {
 
-        foreach ($transactionList as $transaction) {
-            try {
-                FioTransaction::create(
-                    $this->sanitizeJsonFromApi((array) $transaction),
-                );
-            } catch (QueryException|Exception $e) {
-                $errorCode = $e->errorInfo[1] ?? null;
-                if ($errorCode === 1062) {
-                    continue;
+            $url = sprintf(
+                $url,
+                $bankAccount->accountApiToken,
+                $from->format('Y-m-d'),
+                $to->format('Y-m-d'),
+            );
+
+            $json = Http::get($url)->json();
+
+            if (!\is_array($json)) {
+                continue;
+            }
+
+            if (isset($json['accountStatement']['transactionList']['transaction'])) {
+                $transactionList = (array) $json['accountStatement']['transactionList']['transaction'];
+            } else {
+                continue;
+            }
+
+            foreach ($transactionList as $transaction) {
+                try {
+
+                    $keysAndValues = array_merge(
+                        $this->sanitizeJsonFromApi((array) $transaction),
+                        ['bank_id' => $bankAccount->id],
+                    );
+
+                    FioTransaction::updateOrCreate(
+                        $keysAndValues,
+                    );
+                } catch (QueryException|Exception $e) {
+                    $errorCode = $e->errorInfo[1] ?? null;
+                    if ($errorCode === 1062) {
+                        continue;
+                    }
+
+                    throw $e;
                 }
-
-                throw $e;
             }
         }
 

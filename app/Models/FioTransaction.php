@@ -19,6 +19,7 @@ class FioTransaction extends Model
         'reference',
         'comment',
         'note_for_recipient',
+        'bank_id',
     ];
 
     protected $casts = [

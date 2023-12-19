@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Models\UserBankAccounts;
@@ -19,7 +21,6 @@ class UpdateBankAccount extends Component
     #[Rule(['required'])]
     public ?string $accountCurrency = null;
 
-
     public function mount(int $id): void
     {
         $bankAccount = UserBankAccounts::find($id);
@@ -34,7 +35,6 @@ class UpdateBankAccount extends Component
         $this->id = $bankAccount->id;
     }
 
-
     public function update(UserBankAccounts $userBankAccount): void
     {
         $userBankAccount->update([
@@ -45,7 +45,6 @@ class UpdateBankAccount extends Component
 
         $this->redirect(ShowBankAccounts::class, true);
     }
-
 
     public function render(): View
     {
