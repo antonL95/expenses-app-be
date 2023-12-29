@@ -14,16 +14,17 @@ class GetCurrentBankAccountBalanceCommand extends Command
 {
     /**
      * The name and signature of the console command.
+     *
      * @var string
      */
     protected $signature = 'app:get-current-bank-account-balance-command';
 
     /**
      * The console command description.
+     *
      * @var string
      */
     protected $description = 'Get current account balance';
-
 
     /**
      * Execute the console command.
